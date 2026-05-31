@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\User;
@@ -8,19 +9,40 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $totalUsers  = User::count();
-        $totalGames  = Game::where('user_id', auth()->id())->count();
-        $genreStats  = Game::where('user_id', auth()->id())
-                        ->selectRaw('genre, count(*) as count')
-                        ->groupBy('genre')->get();
-        $statusStats = Game::where('user_id', auth()->id())
-                        ->selectRaw('status, count(*) as count')
-                        ->groupBy('status')->get();
-        $recentGames = Game::where('user_id', auth()->id())
-                        ->latest()->take(5)->get();
+        $user = auth()->user();
+        $isAdmin = $user->is_admin;
+
+        $gamesQuery = Game::query();
+
+        if (! $isAdmin) {
+            $gamesQuery->where('user_id', $user->id);
+        }
+
+        $totalUsers = User::count();
+        $totalGames = (clone $gamesQuery)->count();
+
+        $genreStats = (clone $gamesQuery)
+            ->selectRaw('genre, COUNT(*) as count')
+            ->groupBy('genre')
+            ->get();
+
+        $statusStats = (clone $gamesQuery)
+            ->selectRaw('status, COUNT(*) as count')
+            ->groupBy('status')
+            ->get();
+
+        $recentGames = (clone $gamesQuery)
+            ->latest()
+            ->take(5)
+            ->get();
 
         return view('dashboard.index', compact(
-            'totalUsers', 'totalGames', 'genreStats', 'statusStats', 'recentGames'
+            'isAdmin',
+            'totalUsers',
+            'totalGames',
+            'genreStats',
+            'statusStats',
+            'recentGames'
         ));
     }
 }
