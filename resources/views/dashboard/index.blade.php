@@ -17,20 +17,6 @@
 <!-- Stat Cards -->
 <div class="row g-3 mb-4">
     <div class="col-md-3 col-sm-6">
-        <div class="card p-3 h-100" style="border-left:4px solid #7c6af7">
-            @if($isAdmin)
-            <div style="color:#6060a0;font-size:.8rem;text-transform:uppercase;letter-spacing:.05em">Total Users</div>
-            <div class="fs-2 fw-bold" style="color:#7c6af7">{{ $totalUsers }}</div>
-            <div style="color:#6060a0;font-size:.8rem"><i class="bi bi-people me-1"></i>Registered accounts</div>
-            @else
-            <div style="color:#6060a0;font-size:.8rem;text-transform:uppercase;letter-spacing:.05em">Wishlist</div>
-            <div class="fs-2 fw-bold" style="color:#7c6af7">{{ $statusStats->where('status','wishlist')->first()->count ?? 0 }}</div>
-            <div style="color:#6060a0;font-size:.8rem"><i class="bi bi-bookmark-heart me-1"></i>Saved for later</div>
-            @endif
-        </div>
-    </div>
-
-    <div class="col-md-3 col-sm-6">
         <div class="card p-3 h-100" style="border-left:4px solid #4caf82">
             <div style="color:#6060a0;font-size:.8rem;text-transform:uppercase;letter-spacing:.05em">
                 {{ $isAdmin ? 'Total Games' : 'My Games' }}
@@ -47,6 +33,20 @@
             <div style="color:#6060a0;font-size:.8rem;text-transform:uppercase;letter-spacing:.05em">Playing</div>
             <div class="fs-2 fw-bold" style="color:#4a9af5">{{ $statusStats->where('status','playing')->first()->count ?? 0 }}</div>
             <div style="color:#6060a0;font-size:.8rem"><i class="bi bi-play-circle me-1"></i>Currently playing</div>
+        </div>
+    </div>
+
+    <div class="col-md-3 col-sm-6">
+        <div class="card p-3 h-100" style="border-left:4px solid #7c6af7">
+            @if($isAdmin)
+                <div style="color:#6060a0;font-size:.8rem;text-transform:uppercase;letter-spacing:.05em">Total Users</div>
+                <div class="fs-2 fw-bold" style="color:#7c6af7">{{ $totalUsers }}</div>
+                <div style="color:#6060a0;font-size:.8rem"><i class="bi bi-people me-1"></i>Registered accounts</div>
+            @else
+                <div style="color:#6060a0;font-size:.8rem;text-transform:uppercase;letter-spacing:.05em">Wishlist</div>
+                <div class="fs-2 fw-bold" style="color:#7c6af7">{{ $statusStats->where('status','wishlist')->first()->count ?? 0 }}</div>
+                <div style="color:#6060a0;font-size:.8rem"><i class="bi bi-bookmark-heart me-1"></i>Saved for later</div>
+            @endif
         </div>
     </div>
 
