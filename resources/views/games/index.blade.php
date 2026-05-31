@@ -78,7 +78,7 @@
             <!-- Game Image -->
 <div style="position:relative;height:200px;overflow:hidden;background:linear-gradient(135deg,#1a1a3a,#2a1a4a)">
     @if($game->image)
-        <img src="{{ asset('game-images/' . $game->image) }}"
+        <img src="{{ asset('avatars/game-images/' . $game->image) }}"
              style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block">
     @else
         <div class="d-flex align-items-center justify-content-center h-100">
@@ -402,7 +402,7 @@
             const currentImg = document.getElementById('editCurrentImage');
             const imgPreview = document.getElementById('editImagePreview');
             if (imgData) {
-                imgPreview.src = '/game-images/' + imgData;
+                imgPreview.src = '/avatars/game-images/' + imgData.image;
                 currentImg.style.display = 'block';
             } else {
                 currentImg.style.display = 'none';

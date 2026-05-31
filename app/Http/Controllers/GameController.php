@@ -7,6 +7,17 @@ use Illuminate\Http\Request;
 
 class GameController extends Controller
 {
+    private function gameImagePath(?string $filename = null): string
+    {
+        $path = public_path('avatars/game-images');
+
+        if (! file_exists($path)) {
+            mkdir($path, 0755, true);
+        }
+
+        return $filename ? $path . DIRECTORY_SEPARATOR . $filename : $path;
+    }
+
     public function index()
     {
         $games = Game::where('user_id', auth()->id())->latest()->paginate(12);
@@ -44,9 +55,9 @@ class GameController extends Controller
 
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
             $file = $request->file('image');
-            $filename = time() . '.' . $file->extension();
+            $filename = time() . '_' . uniqid() . '.' . $file->extension();
 
-            $file->move(public_path('game-images'), $filename);
+            $file->move($this->gameImagePath(), $filename);
             $data['image'] = $filename;
         }
 
@@ -87,14 +98,14 @@ class GameController extends Controller
         ];
 
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
-            if ($game->image && file_exists(public_path('game-images/' . $game->image))) {
-                unlink(public_path('game-images/' . $game->image));
+            if ($game->image && file_exists($this->gameImagePath($game->image))) {
+                unlink($this->gameImagePath($game->image));
             }
 
             $file = $request->file('image');
-            $filename = time() . '.' . $file->extension();
+            $filename = time() . '_' . uniqid() . '.' . $file->extension();
 
-            $file->move(public_path('game-images'), $filename);
+            $file->move($this->gameImagePath(), $filename);
             $data['image'] = $filename;
         }
 
@@ -108,8 +119,8 @@ class GameController extends Controller
     {
         abort_if($game->user_id !== auth()->id(), 403);
 
-        if ($game->image && file_exists(public_path('game-images/' . $game->image))) {
-            unlink(public_path('game-images/' . $game->image));
+        if ($game->image && file_exists($this->gameImagePath($game->image))) {
+            unlink($this->gameImagePath($game->image));
         }
 
         $game->delete();
