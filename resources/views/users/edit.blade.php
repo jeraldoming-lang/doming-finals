@@ -4,7 +4,7 @@
 
 <div class="d-flex align-items-center gap-3 mb-4">
     <a href="{{ route('users.index') }}" class="btn btn-sm"
-       style="background:#1a1a2e;color:#a0a0c0;border:1px solid #2a2a4a">
+        style="background:#1a1a2e;color:#a0a0c0;border:1px solid #2a2a4a">
         <i class="bi bi-arrow-left"></i>
     </a>
     <div>
@@ -17,7 +17,7 @@
     <!-- User info header -->
     <div class="d-flex align-items-center gap-3 mb-4 pb-4" style="border-bottom:1px solid #2a2a4a">
         <div class="rounded-circle d-flex align-items-center justify-content-center"
-             style="width:52px;height:52px;min-width:52px;background:#2a2a4a;color:#7c6af7;font-size:1.3rem;font-weight:700">
+            style="width:52px;height:52px;min-width:52px;background:#2a2a4a;color:#7c6af7;font-size:1.3rem;font-weight:700">
             {{ strtoupper(substr($user->name, 0, 1)) }}
         </div>
         <div>
@@ -36,8 +36,8 @@
                     <i class="bi bi-person"></i>
                 </span>
                 <input type="text" name="name"
-                       class="form-control @error('name') is-invalid @enderror"
-                       value="{{ old('name', $user->name) }}">
+                    class="form-control @error('name') is-invalid @enderror"
+                    value="{{ old('name', $user->name) }}">
                 @error('name')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
         </div>
@@ -48,8 +48,8 @@
                     <i class="bi bi-envelope"></i>
                 </span>
                 <input type="email" name="email"
-                       class="form-control @error('email') is-invalid @enderror"
-                       value="{{ old('email', $user->email) }}">
+                    class="form-control @error('email') is-invalid @enderror"
+                    value="{{ old('email', $user->email) }}">
                 @error('email')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
         </div>
@@ -58,7 +58,7 @@
                 <i class="bi bi-check-lg me-1"></i> Save Changes
             </button>
             <a href="{{ route('users.index') }}" class="btn"
-               style="background:#1a1a2e;color:#a0a0c0;border:1px solid #2a2a4a">
+                style="background:#1a1a2e;color:#a0a0c0;border:1px solid #2a2a4a">
                 Cancel
             </a>
         </div>

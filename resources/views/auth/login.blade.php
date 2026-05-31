@@ -27,7 +27,7 @@
                             <i class="bi bi-envelope"></i>
                         </span>
                         <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
-                               value="{{ old('email') }}" placeholder="you@example.com" autofocus>
+                            value="{{ old('email') }}" placeholder="you@example.com" autofocus>
                     </div>
                 </div>
 

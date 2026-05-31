@@ -86,8 +86,8 @@
                     <td style="color:#a0a0c0">{{ $game->platform }}</td>
                     <td>
                         @php
-                            $colors = ['owned'=>'#4caf82','playing'=>'#4a9af5','completed'=>'#af4af5','wishlist'=>'#f5a54a'];
-                            $bgs = ['owned'=>'#2a4a3a','playing'=>'#2a3a4a','completed'=>'#3a2a4a','wishlist'=>'#4a3a2a'];
+                        $colors = ['owned'=>'#4caf82','playing'=>'#4a9af5','completed'=>'#af4af5','wishlist'=>'#f5a54a'];
+                        $bgs = ['owned'=>'#2a4a3a','playing'=>'#2a3a4a','completed'=>'#3a2a4a','wishlist'=>'#4a3a2a'];
                         @endphp
                         <span class="badge" style="background:{{ $bgs[$game->status] ?? '#2a2a4a' }};color:{{ $colors[$game->status] ?? '#a0a0c0' }}">
                             {{ ucfirst($game->status) }}
@@ -95,14 +95,14 @@
                     </td>
                     <td>
                         @if($game->rating)
-                            <span style="color:#f5a54a">
-                                @for($i=1;$i<=5;$i++)
-                                    <i class="bi bi-star{{ $i <= round($game->rating/2) ? '-fill' : '' }}" style="font-size:.7rem"></i>
+                        <span style="color:#f5a54a">
+                            @for($i=1;$i<=5;$i++)
+                                <i class="bi bi-star{{ $i <= round($game->rating/2) ? '-fill' : '' }}" style="font-size:.7rem"></i>
                                 @endfor
-                            </span>
-                            <small style="color:#6060a0"> {{ $game->rating }}/10</small>
+                        </span>
+                        <small style="color:#6060a0"> {{ $game->rating }}/10</small>
                         @else
-                            <span style="color:#6060a0">—</span>
+                        <span style="color:#6060a0">—</span>
                         @endif
                     </td>
                 </tr>
@@ -122,57 +122,95 @@
 @endsection
 @section('scripts')
 <script>
-const genreData  = @json($genreStats);
-const statusData = @json($statusStats);
+    const genreData = @json($genreStats);
+    const statusData = @json($statusStats);
 
-Chart.defaults.color = '#6060a0';
-Chart.defaults.borderColor = '#2a2a4a';
+    Chart.defaults.color = '#6060a0';
+    Chart.defaults.borderColor = '#2a2a4a';
 
-new Chart(document.getElementById('genreChart'), {
-    type: 'bar',
-    data: {
-        labels: genreData.map(d => d.genre),
-        datasets: [{
-            label: 'Games',
-            data: genreData.map(d => d.count),
-            backgroundColor: '#7c6af7',
-            borderRadius: 6,
-            borderSkipped: false,
-        }]
-    },
-    options: {
-        plugins: { legend: { display: false } },
-        scales: {
-            y: { ticks: { color: '#6060a0', stepSize: 1 }, grid: { color: '#1e1e3a' } },
-            x: { ticks: { color: '#6060a0' }, grid: { display: false } }
-        }
-    }
-});
-
-new Chart(document.getElementById('statusChart'), {
-    type: 'doughnut',
-    data: {
-        labels: ['Owned', 'Playing', 'Completed', 'Wishlist'],
-        datasets: [{
-            data: [
-                {{ $statusStats->where('status','owned')->first()->count ?? 0 }},
-                {{ $statusStats->where('status','playing')->first()->count ?? 0 }},
-                {{ $statusStats->where('status','completed')->first()->count ?? 0 }},
-                {{ $statusStats->where('status','wishlist')->first()->count ?? 0 }},
-            ],
-            backgroundColor: ['#4caf82','#4a9af5','#af4af5','#f5a54a'],
-            borderColor: '#1a1a2e',
-            borderWidth: 3,
-        }]
-    },
-    options: {
-        cutout: '65%',
-        plugins: {
-            legend: {
-                labels: { color: '#a0a0c0', padding: 16, usePointStyle: true }
+    new Chart(document.getElementById('genreChart'), {
+        type: 'bar',
+        data: {
+            labels: genreData.map(d => d.genre),
+            datasets: [{
+                label: 'Games',
+                data: genreData.map(d => d.count),
+                backgroundColor: '#7c6af7',
+                borderRadius: 6,
+                borderSkipped: false,
+            }]
+        },
+        options: {
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    ticks: {
+                        color: '#6060a0',
+                        stepSize: 1
+                    },
+                    grid: {
+                        color: '#1e1e3a'
+                    }
+                },
+                x: {
+                    ticks: {
+                        color: '#6060a0'
+                    },
+                    grid: {
+                        display: false
+                    }
+                }
             }
         }
-    }
-});
+    });
+
+    new Chart(document.getElementById('statusChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Owned', 'Playing', 'Completed', 'Wishlist'],
+            datasets: [{
+                data: [{
+                        {
+                            $statusStats - > where('status', 'owned') - > first() - > count ?? 0
+                        }
+                    },
+                    {
+                        {
+                            $statusStats - > where('status', 'playing') - > first() - > count ?? 0
+                        }
+                    },
+                    {
+                        {
+                            $statusStats - > where('status', 'completed') - > first() - > count ?? 0
+                        }
+                    },
+                    {
+                        {
+                            $statusStats - > where('status', 'wishlist') - > first() - > count ?? 0
+                        }
+                    },
+                ],
+                backgroundColor: ['#4caf82', '#4a9af5', '#af4af5', '#f5a54a'],
+                borderColor: '#1a1a2e',
+                borderWidth: 3,
+            }]
+        },
+        options: {
+            cutout: '65%',
+            plugins: {
+                legend: {
+                    labels: {
+                        color: '#a0a0c0',
+                        padding: 16,
+                        usePointStyle: true
+                    }
+                }
+            }
+        }
+    });
 </script>
 @endsection

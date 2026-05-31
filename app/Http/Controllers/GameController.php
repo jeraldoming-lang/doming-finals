@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Game;
@@ -9,7 +10,13 @@ class GameController extends Controller
     public function index()
     {
         $games = Game::where('user_id', auth()->id())->latest()->paginate(12);
+
         return view('games.index', compact('games'));
+    }
+
+    public function create()
+    {
+        return view('games.create');
     }
 
     public function store(Request $request)
@@ -36,8 +43,9 @@ class GameController extends Controller
         ];
 
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
-            $file     = $request->file('image');
+            $file = $request->file('image');
             $filename = time() . '.' . $file->extension();
+
             $file->move(public_path('game-images'), $filename);
             $data['image'] = $filename;
         }
@@ -46,6 +54,13 @@ class GameController extends Controller
 
         return redirect()->route('games.index')
             ->with('success', 'Game added to your collection!');
+    }
+
+    public function edit(Game $game)
+    {
+        abort_if($game->user_id !== auth()->id(), 403);
+
+        return view('games.edit', compact('game'));
     }
 
     public function update(Request $request, Game $game)
@@ -75,8 +90,10 @@ class GameController extends Controller
             if ($game->image && file_exists(public_path('game-images/' . $game->image))) {
                 unlink(public_path('game-images/' . $game->image));
             }
-            $file     = $request->file('image');
+
+            $file = $request->file('image');
             $filename = time() . '.' . $file->extension();
+
             $file->move(public_path('game-images'), $filename);
             $data['image'] = $filename;
         }
@@ -90,10 +107,13 @@ class GameController extends Controller
     public function destroy(Game $game)
     {
         abort_if($game->user_id !== auth()->id(), 403);
+
         if ($game->image && file_exists(public_path('game-images/' . $game->image))) {
             unlink(public_path('game-images/' . $game->image));
         }
+
         $game->delete();
+
         return redirect()->route('games.index')
             ->with('success', 'Game removed from collection!');
     }

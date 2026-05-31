@@ -21,7 +21,7 @@
                             <i class="bi bi-person"></i>
                         </span>
                         <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
-                               value="{{ old('name') }}" placeholder="Juan Dela Cruz">
+                            value="{{ old('name') }}" placeholder="Juan Dela Cruz">
                         @error('name')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                 </div>
@@ -33,7 +33,7 @@
                             <i class="bi bi-envelope"></i>
                         </span>
                         <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
-                               value="{{ old('email') }}" placeholder="you@example.com">
+                            value="{{ old('email') }}" placeholder="you@example.com">
                         @error('email')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                 </div>
@@ -45,7 +45,7 @@
                             <i class="bi bi-lock"></i>
                         </span>
                         <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
-                               placeholder="Min. 8 characters">
+                            placeholder="Min. 8 characters">
                         @error('password')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                 </div>
@@ -57,7 +57,7 @@
                             <i class="bi bi-lock-fill"></i>
                         </span>
                         <input type="password" name="password_confirmation" class="form-control"
-                               placeholder="Repeat password">
+                            placeholder="Repeat password">
                     </div>
                 </div>
 

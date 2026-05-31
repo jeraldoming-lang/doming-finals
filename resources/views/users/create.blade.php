@@ -4,7 +4,7 @@
 
 <div class="d-flex align-items-center gap-3 mb-4">
     <a href="{{ route('users.index') }}" class="btn btn-sm"
-       style="background:#1a1a2e;color:#a0a0c0;border:1px solid #2a2a4a">
+        style="background:#1a1a2e;color:#a0a0c0;border:1px solid #2a2a4a">
         <i class="bi bi-arrow-left"></i>
     </a>
     <div>
@@ -23,8 +23,8 @@
                     <i class="bi bi-person"></i>
                 </span>
                 <input type="text" name="name"
-                       class="form-control @error('name') is-invalid @enderror"
-                       value="{{ old('name') }}" placeholder="Juan Dela Cruz">
+                    class="form-control @error('name') is-invalid @enderror"
+                    value="{{ old('name') }}" placeholder="Juan Dela Cruz">
                 @error('name')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
         </div>
@@ -35,8 +35,8 @@
                     <i class="bi bi-envelope"></i>
                 </span>
                 <input type="email" name="email"
-                       class="form-control @error('email') is-invalid @enderror"
-                       value="{{ old('email') }}" placeholder="user@example.com">
+                    class="form-control @error('email') is-invalid @enderror"
+                    value="{{ old('email') }}" placeholder="user@example.com">
                 @error('email')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
         </div>
@@ -47,8 +47,8 @@
                     <i class="bi bi-lock"></i>
                 </span>
                 <input type="password" name="password"
-                       class="form-control @error('password') is-invalid @enderror"
-                       placeholder="Min. 6 characters">
+                    class="form-control @error('password') is-invalid @enderror"
+                    placeholder="Min. 6 characters">
                 @error('password')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
         </div>
@@ -57,7 +57,7 @@
                 <i class="bi bi-plus-lg me-1"></i> Create User
             </button>
             <a href="{{ route('users.index') }}" class="btn"
-               style="background:#1a1a2e;color:#a0a0c0;border:1px solid #2a2a4a">
+                style="background:#1a1a2e;color:#a0a0c0;border:1px solid #2a2a4a">
                 Cancel
             </a>
         </div>
