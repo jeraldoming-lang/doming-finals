@@ -183,6 +183,60 @@
             </form>
         </div>
 
+        <!-- Change Password -->
+        <div class="card p-4 mt-4">
+            <div class="d-flex align-items-center gap-3 mb-4 pb-3" style="border-bottom:1px solid rgba(255,255,255,.07)">
+                <div style="width:40px;height:40px;background:rgba(168,85,247,.2);border-radius:12px;display:flex;align-items:center;justify-content:center">
+                    <i class="bi bi-lock-fill" style="color:#c084fc"></i>
+                </div>
+                <div>
+                    <div class="fw-semibold text-white">Change Password</div>
+                    <div style="font-size:.78rem;color:rgba(255,255,255,.35)">Update your account password</div>
+                </div>
+            </div>
+
+            <form action="{{ route('profile.password.update') }}" method="POST">
+                @csrf
+
+                <div class="mb-3">
+                    <label class="form-label">Current Password *</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-key"></i></span>
+                        <input type="password" name="current_password"
+                               class="form-control @error('current_password') is-invalid @enderror"
+                               placeholder="Enter current password">
+                        @error('current_password')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">New Password *</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                        <input type="password" name="password"
+                               class="form-control @error('password') is-invalid @enderror"
+                               placeholder="Enter new password">
+                        @error('password')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                    <div class="form-text">Minimum of 8 characters.</div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label">Confirm New Password *</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                        <input type="password" name="password_confirmation"
+                               class="form-control"
+                               placeholder="Confirm new password">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary px-4">
+                    <i class="bi bi-check-lg me-1"></i> Change Password
+                </button>
+            </form>
+        </div>
+
         <!-- Recent Activity -->
         <div class="card p-4 mt-4">
             <div class="d-flex align-items-center gap-3 mb-3 pb-3" style="border-bottom:1px solid rgba(255,255,255,.07)">

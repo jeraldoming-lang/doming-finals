@@ -25,7 +25,8 @@
             background: var(--sidebar-bg);
             border-right: 1px solid var(--border);
             display: flex; flex-direction: column;
-            z-index: 200;
+            z-index: 300;
+            transition: transform .25s ease;
         }
         .sidebar-brand {
             display: flex; align-items: center; gap: 12px;
@@ -63,21 +64,16 @@
         .sidebar .nav-link.active i { color: var(--purple); }
 
         .admin-badge {
-            margin-left: auto;
-            font-size: .6rem; font-weight: 700;
-            background: rgba(124,106,247,.25);
-            color: var(--purple-light);
-            padding: 2px 7px; border-radius: 20px;
-            letter-spacing: .03em;
+            margin-left: auto; font-size: .6rem; font-weight: 700;
+            background: rgba(124,106,247,.25); color: var(--purple-light);
+            padding: 2px 7px; border-radius: 20px; letter-spacing: .03em;
         }
 
         .sidebar-footer { margin-top: auto; padding: .75rem; border-top: 1px solid var(--border); }
         .user-pill {
             display: flex; align-items: center; gap: 10px;
-            background: rgba(255,255,255,.04);
-            border: 1px solid var(--border);
-            border-radius: 12px; padding: .65rem .85rem;
-            margin-bottom: .6rem;
+            background: rgba(255,255,255,.04); border: 1px solid var(--border);
+            border-radius: 12px; padding: .65rem .85rem; margin-bottom: .6rem;
         }
         .user-pill-avatar {
             width: 36px; height: 36px; min-width: 36px; border-radius: 50%;
@@ -89,6 +85,38 @@
         .user-pill-name { font-size: .82rem; font-weight: 600; color: #fff; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 130px; }
         .user-pill-role { font-size: .68rem; color: rgba(255,255,255,.3); }
         .user-pill-role.is-admin { color: var(--purple-light); }
+
+        /* ── Topbar (mobile only) ── */
+        .topbar {
+            display: none;
+            position: fixed; top: 0; left: 0; right: 0;
+            height: 60px; background: var(--sidebar-bg);
+            border-bottom: 1px solid var(--border);
+            align-items: center; justify-content: space-between;
+            padding: 0 1rem; z-index: 250;
+        }
+        .topbar-brand {
+            display: flex; align-items: center; gap: 10px;
+            text-decoration: none;
+        }
+        .hamburger {
+            width: 38px; height: 38px; border-radius: 10px;
+            background: rgba(255,255,255,.06); border: 1px solid var(--border);
+            color: rgba(255,255,255,.7); font-size: 1.1rem;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all .15s;
+        }
+        .hamburger:hover { background: rgba(255,255,255,.1); color: #fff; }
+
+        /* ── Overlay ── */
+        .sidebar-overlay {
+            display: none;
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,.6);
+            backdrop-filter: blur(2px);
+            z-index: 290;
+        }
+        .sidebar-overlay.active { display: block; }
 
         /* ── Main ── */
         .main-content { margin-left: 260px; padding: 2rem; min-height: 100vh; }
@@ -104,11 +132,7 @@
         .stat-card.green::before  { background: #22c55e; }
         .stat-card.blue::before   { background: #3b82f6; }
         .stat-card.pink::before   { background: #a855f7; }
-        .stat-card .stat-icon {
-            width: 44px; height: 44px; border-radius: 12px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.2rem; margin-bottom: .85rem;
-        }
+        .stat-card .stat-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; margin-bottom: .85rem; }
         .stat-card .stat-label { font-size: .72rem; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: rgba(255,255,255,.35); margin-bottom: .3rem; }
         .stat-card .stat-value { font-size: 2rem; font-weight: 700; line-height: 1; margin-bottom: .3rem; }
         .stat-card .stat-sub { font-size: .78rem; color: rgba(255,255,255,.3); }
@@ -122,12 +146,10 @@
         /* ── Forms ── */
         .form-control, .form-select {
             background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.1);
-            color: #fff; border-radius: 10px; padding: .6rem .9rem;
-            transition: all .2s;
+            color: #fff; border-radius: 10px; padding: .6rem .9rem; transition: all .2s;
         }
         .form-control:focus, .form-select:focus {
-            background: rgba(255,255,255,.07);
-            border-color: var(--purple); color: #fff;
+            background: rgba(255,255,255,.07); border-color: var(--purple); color: #fff;
             box-shadow: 0 0 0 3px rgba(124,106,247,.2);
         }
         .form-control::placeholder { color: rgba(255,255,255,.2); }
@@ -175,12 +197,56 @@
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,.1); border-radius: 10px; }
         a { color: var(--purple-light); }
         a:hover { color: #c4b5fd; }
+
+        /* ── Responsive ── */
+        @media (max-width: 991px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .topbar {
+                display: flex;
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 1.25rem;
+                padding-top: 75px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .main-content {
+                padding: 1rem;
+                padding-top: 70px;
+            }
+            .stat-card .stat-value { font-size: 1.5rem; }
+        }
     </style>
 </head>
 <body>
 
 @auth
-<div class="sidebar">
+
+<!-- ── Mobile Topbar ── -->
+<div class="topbar">
+    <a href="{{ route('dashboard') }}" class="topbar-brand">
+        <div class="brand-icon" style="width:32px;height:32px;font-size:.95rem">
+            <i class="bi bi-controller"></i>
+        </div>
+        <div class="brand-text" style="font-size:1rem">Game<span>Cache</span></div>
+    </a>
+    <button class="hamburger" id="sidebarToggle">
+        <i class="bi bi-list" id="hamburgerIcon"></i>
+    </button>
+</div>
+
+<!-- ── Overlay ── -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<!-- ── Sidebar ── -->
+<div class="sidebar" id="sidebar">
     <a href="{{ route('dashboard') }}" class="sidebar-brand">
         <div class="brand-icon"><i class="bi bi-controller"></i></div>
         <div>
@@ -193,13 +259,11 @@
         <div class="sidebar-section">Main</div>
         <a href="{{ route('dashboard') }}"
            class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
-            <i class="bi bi-speedometer2"></i>
-            <span>Dashboard</span>
+            <i class="bi bi-speedometer2"></i><span>Dashboard</span>
         </a>
         <a href="{{ route('games.index') }}"
            class="nav-link {{ request()->routeIs('games*') ? 'active' : '' }}">
-            <i class="bi bi-joystick"></i>
-            <span>My Collection</span>
+            <i class="bi bi-joystick"></i><span>My Collection</span>
         </a>
 
         @if(auth()->user()->is_admin)
@@ -215,8 +279,7 @@
         <div class="sidebar-section">Account</div>
         <a href="{{ route('profile.edit') }}"
            class="nav-link {{ request()->routeIs('profile*') ? 'active' : '' }}">
-            <i class="bi bi-person-circle"></i>
-            <span>My Profile</span>
+            <i class="bi bi-person-circle"></i><span>My Profile</span>
         </a>
     </nav>
 
@@ -249,6 +312,7 @@
         </form>
     </div>
 </div>
+
 @endauth
 
 <!-- Main Content -->
@@ -288,12 +352,47 @@
     @endif
 </div>
 
-<!-- Scripts BEFORE closing body tag -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+    // Toast auto-hide
     document.querySelectorAll('.toast').forEach(t => {
         setTimeout(() => bootstrap.Toast.getOrCreateInstance(t).hide(), 4000);
+    });
+
+    // Hamburger toggle
+    const sidebar        = document.getElementById('sidebar');
+    const overlay        = document.getElementById('sidebarOverlay');
+    const toggleBtn      = document.getElementById('sidebarToggle');
+    const hamburgerIcon  = document.getElementById('hamburgerIcon');
+
+    function openSidebar() {
+        sidebar.classList.add('open');
+        overlay.classList.add('active');
+        hamburgerIcon.className = 'bi bi-x-lg';
+    }
+
+    function closeSidebar() {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('active');
+        hamburgerIcon.className = 'bi bi-list';
+    }
+
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+        });
+    }
+
+    if (overlay) {
+        overlay.addEventListener('click', closeSidebar);
+    }
+
+    // Close sidebar on nav link click (mobile)
+    document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth < 992) closeSidebar();
+        });
     });
 </script>
 @yield('scripts')
