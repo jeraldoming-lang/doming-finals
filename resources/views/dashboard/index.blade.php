@@ -226,31 +226,15 @@
 @endsection
 
 @section('scripts')
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+@section('scripts')
 <script>
     const genreData = @json($genreStats);
 
-    const statusData = [{
-            {
-                $statusStats - > where('status', 'owned') - > first() - > count ?? 0
-            }
-        },
-        {
-            {
-                $statusStats - > where('status', 'playing') - > first() - > count ?? 0
-            }
-        },
-        {
-            {
-                $statusStats - > where('status', 'completed') - > first() - > count ?? 0
-            }
-        },
-        {
-            {
-                $statusStats - > where('status', 'wishlist') - > first() - > count ?? 0
-            }
-        }
+    const statusData = [
+        {{ $statusStats->where('status', 'owned')->first()->count ?? 0 }},
+        {{ $statusStats->where('status', 'playing')->first()->count ?? 0 }},
+        {{ $statusStats->where('status', 'completed')->first()->count ?? 0 }},
+        {{ $statusStats->where('status', 'wishlist')->first()->count ?? 0 }}
     ];
 
     Chart.defaults.color = '#6060a0';
@@ -272,9 +256,7 @@
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
-                legend: {
-                    display: false
-                }
+                legend: { display: false }
             },
             scales: {
                 y: {
@@ -283,17 +265,11 @@
                         color: '#6060a0',
                         stepSize: 1
                     },
-                    grid: {
-                        color: '#1e1e3a'
-                    }
+                    grid: { color: '#1e1e3a' }
                 },
                 x: {
-                    ticks: {
-                        color: '#6060a0'
-                    },
-                    grid: {
-                        display: false
-                    }
+                    ticks: { color: '#6060a0' },
+                    grid: { display: false }
                 }
             }
         }
